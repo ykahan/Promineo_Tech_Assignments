@@ -1,8 +1,8 @@
-package Java_Week_1;
+package Java;
 
 import java.math.BigDecimal;
 
-public class App {
+public class App_Week_1 {
     public static void main(String[] args) {
         BigDecimal bananaPrice = new BigDecimal("3.25");
         BigDecimal applePrice = new BigDecimal("2.73");

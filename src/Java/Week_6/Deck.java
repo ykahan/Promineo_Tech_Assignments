@@ -30,6 +30,12 @@ public class Deck {
         Collections.shuffle(cards);
     }
 
+    public Card draw(){
+        if(cards.size() > 0) {
+            return cards.remove(0);
+        } else return null;
+    }
+
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();

@@ -1,8 +1,6 @@
-package Week_6;
+package Java.Week_6;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 

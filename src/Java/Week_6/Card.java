@@ -1,4 +1,4 @@
-package Week_6;
+package Java.Week_6;
 
 public class Card {
     private int value;

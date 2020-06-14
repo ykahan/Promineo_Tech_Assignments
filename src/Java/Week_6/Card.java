@@ -25,8 +25,12 @@ public class Card {
         this.name = name;
     }
 
+    public void describe(){
+        System.out.println(toString());
+    }
+
     @Override
     public String toString(){
-        return "\n" + name;
+        return name;
     }
 }

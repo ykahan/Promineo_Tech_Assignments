@@ -24,6 +24,7 @@ public class Deck {
                 cards.add(card);
             }
         }
+        shuffle();
     }
 
     public void shuffle(){
@@ -31,21 +32,20 @@ public class Deck {
     }
 
     public Card draw(){
-        if(cards.size() > 0) {
-            return cards.remove(0);
-        } else return null;
+        if(cards.size() > 0) return cards.remove(0);
+        return null;
     }
 
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
         for(Card card: cards){
-            sb.append(card.toString());
+            card.describe();
         }
         return sb.toString();
     }
 
     public void display(){
-        System.out.println(toString());
+        System.out.print(toString());
     }
 }

@@ -41,7 +41,15 @@ public class Player {
         hand.add(card);
     }
 
+    public int getScore(){
+        return score;
+    }
+
     public void incrementScore(){
         score++;
+    }
+
+    public String getName() {
+        return this.name;
     }
 }

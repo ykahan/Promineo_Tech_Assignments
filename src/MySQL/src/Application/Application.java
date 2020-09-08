@@ -5,6 +5,8 @@ import Database_Controls.students_tractates_dao;
 import Database_Controls.tractates_dao;
 
 import java.sql.Date;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class Application {
@@ -19,7 +21,7 @@ public class Application {
                 case (1): // display all tractates
                     tractates_dao.displayAllTracs();
                     break;
-                case (2):
+                case (2): // display one tractate
                     String tracName = tractates_dao.getTracName();
                     boolean tracFound = tractates_dao.doesTracExist(tracName);
                     if(tracFound) tractates_dao.displayOneTrac(tracName);
@@ -102,10 +104,21 @@ public class Application {
         }
     }
 
-}
-
     public static void printMenu() {
-
+        List<String> choices = Arrays.asList(
+            "Display All Tractates",
+                "Display One Tractate",
+                "Display All Students",
+                "Add a new tractate to the database",
+                "Add a new student to the database",
+                "Edit a student name",
+                "Delete a student from the database",
+                "Record a student learning an amud",
+                "Quit the app"
+        );
+        for(int i = 0; i < choices.size(); i++){
+            System.out.println("Option #" + (i + 1) + ": " + choices.get(i));
+        }
     }
 
     public int getUserChoice() {
@@ -113,4 +126,5 @@ public class Application {
         scanner.nextLine();
         return choice;
     }
+
 }

@@ -3,6 +3,7 @@ package Application;
 import Database_Controls.students_dao;
 import Database_Controls.students_tractates_dao;
 import Database_Controls.tractates_dao;
+import IO.Messages;
 
 import java.sql.Date;
 import java.util.Arrays;
@@ -17,6 +18,7 @@ public class Application {
         boolean continueApp = true;
         while (continueApp) {
             printMenu();
+            Messages.getChoice();
             int choice = getUserChoice();
             switch (choice) {
                 case (1):
@@ -24,7 +26,6 @@ public class Application {
                     break;
                 case (2):
                     displayOneTrac();
-                    String trac;
                     break;
                 case (3):
                     students_dao.displayAllStudentNames();
@@ -38,18 +39,18 @@ public class Application {
                 case (6):
                     editStudentName();
                     break;
-                case(7): // delete student from DB
+                case (7): // delete student from DB
                     deleteStudentFromDB();
                     break;
-                case(8): // record student learned daf
+                case (8): // record student learned daf
                     String stuPerName = students_dao.getStudentPersonalName();
                     String stuFamName = students_dao.getStudentFamilyName();
                     boolean studentFound = students_dao.doesStudentExist(stuPerName, stuFamName);
-                    if(studentFound) {
-                        trac = tractates_dao.getTracName();
+                    if (studentFound) {
+                        String trac = tractates_dao.getTracName();
                         int page = getPage();
                         boolean pageIsValid = tractates_dao.isPageValid(page);
-                        if(pageIsValid) {
+                        if (pageIsValid) {
                             boolean getDate = students_tractates_dao.useUserProvidedDate();
                             recordLearning(
                                     getDate,
@@ -58,21 +59,25 @@ public class Application {
                                     trac,
                                     page);
 
-                            }
                         }
+                    }
                     break;
-                case(9): // break out of app
+                case (9): // break out of app
                     continueApp = false;
                     Messages.goodbye();
+                    break;
+                default:
+                    Messages.invalidInput();
+                    break;
             }
         }
     }
 
     private static void recordLearning(boolean getDate, String stuPerName, String stuFamName, String trac, int page) {
-        if(getDate){
+        if (getDate) {
             Date date = getDate();
             student_tractates_dao.enterNewRow(stuPerName, stuFamName, trac, page, date);
-        } else{
+        } else {
             student_tractates_dao.enterNewRow(stuPerName, stuFamName, trac, page);
         }
     }
@@ -120,7 +125,7 @@ public class Application {
         String studentPersonalName = getStudentPersonalName();
         String studentFamilyName = getStudentFamilyName();
         boolean studentFound = students_dao.doesStudentExist(studentPersonalName, studentFamilyName);
-        if(studentFound) students_dao.deleteStudent(studentPersonalName, studentFamilyName);
+        if (studentFound) students_dao.deleteStudent(studentPersonalName, studentFamilyName);
         else {
             Messages.studentNotFound();
         }
@@ -162,13 +167,13 @@ public class Application {
     private static void displayOneTrac() {
         String tracName = tractates_dao.getTracName();
         boolean tracFound = tractates_dao.doesTracExist(tracName);
-        if(tracFound) tractates_dao.displayOneTrac(tracName);
+        if (tracFound) tractates_dao.displayOneTrac(tracName);
         else Messages.tracNotFound();
     }
 
     public static void printMenu() {
         List<String> choices = Arrays.asList(
-            "Display All Tractates",
+                "Display All Tractates",
                 "Display One Tractate",
                 "Display All Students",
                 "Add a new tractate to the database",
@@ -178,14 +183,17 @@ public class Application {
                 "Record a student learning an amud",
                 "Quit the app"
         );
-        for(int i = 0; i < choices.size(); i++){
+
+        for (int i = 0; i < choices.size(); i++) {
             System.out.println("Option #" + (i + 1) + ": " + choices.get(i));
         }
     }
 
-    public int getUserChoice() {
-        int choice = scanner.nextInt();
-        scanner.nextLine();
-        return choice;
+    public static int getUserChoice() {
+            int choice = -1;
+            if(scanner.hasNextInt()) {
+                choice = scanner.nextInt();
+            }
+            return choice;
     }
 }

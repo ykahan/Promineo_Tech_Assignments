@@ -72,14 +72,8 @@ public class Application {
             int page = getPage();
             boolean pageIsValid = tractates_dao.isPageValid(page);
             if (pageIsValid) {
-                boolean getDate = UserInput.getDate();
-                recordLearning(
-                        getDate,
-                        stuPerName,
-                        stuFamName,
-                        trac,
-                        page);
-
+                boolean getDate = UserInput.shouldGetDate();
+                recordLearning(getDate, stuPerName, stuFamName, trac, page);
             }
         }
     }
@@ -88,7 +82,7 @@ public class Application {
         Date date = null;
         if (getDate) {
             while(date == null)
-            date = getDate();
+            date = UserInput.getDate();
             if(date != null) student_tractates_dao.enterNewRow(stuPerName, stuFamName, trac, page, date);
             else {
                 PrintToScreen.dateInvalid();
@@ -97,49 +91,6 @@ public class Application {
         } else {
             student_tractates_dao.enterNewRow(stuPerName, stuFamName, trac, page);
         }
-    }
-
-    private static Date getDate() {
-        int year = getYear();
-        int month = getMonth();
-        int day = getDay();
-        boolean dateIsValid = isDateValid(year, month, day);
-        if(dateIsValid) return (Date) new GregorianCalendar(year, month - 1, day).getTime();
-        else return null;
-    }
-
-    private static boolean isDateValid(int year, int month, int day) {
-        return year != -1 && month != -1 && day != -1;
-    }
-
-    private static int getDay() {
-        scanner.nextLine();
-        PrintToScreen.getDay();
-        return getInteger();
-    }
-
-    private static int getMonth() {
-        scanner.nextLine();
-        PrintToScreen.getMonth();
-        return getInteger();
-    }
-
-    private static int getInteger() {
-        boolean isInt = scanner.hasNextInt();
-        if (isInt) return scanner.nextInt();
-        else return -1;
-    }
-
-    private static int getYear() {
-        scanner.nextLine();
-        PrintToScreen.getYear();
-        return getInteger();
-    }
-
-    private static long millisSinceEpoch(String year, String month, String day) {
-        int yearsPassed = Integer.parseInt(year) - 1970;
-        int monthsPassed = Integer.parseInt(month) - 1 + (yearsPassed * 12);
-        int daysPassed = Integer.parseInt(day) - 1;
     }
 
     private static int getPage() {

@@ -1,11 +1,13 @@
-package Application;
+package application;
 
-import Database_Controls.students_dao;
-import Database_Controls.students_tractates_dao;
-import Database_Controls.tractates_dao;
-import IO.Messages;
+import database.dao.students_dao;
+import database.dao.students_tractates_dao;
+import database.dao.tractates_dao;
+import io.Messages;
+import io.UserInput;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -20,57 +22,62 @@ public class Application {
             printMenu();
             Messages.getChoice();
             int choice = getUserChoice();
-            switch (choice) {
-                case (1):
-                    tractates_dao.displayAllTracs();
-                    break;
-                case (2):
-                    displayOneTrac();
-                    break;
-                case (3):
-                    students_dao.displayAllStudentNames();
-                    break;
-                case (4):
-                    addNewTracToDB();
-                    break;
-                case (5):
-                    addNewStudentToDB();
-                    break;
-                case (6):
-                    editStudentName();
-                    break;
-                case (7): // delete student from DB
-                    deleteStudentFromDB();
-                    break;
-                case (8): // record student learned daf
-                    String stuPerName = students_dao.getStudentPersonalName();
-                    String stuFamName = students_dao.getStudentFamilyName();
-                    boolean studentFound = students_dao.doesStudentExist(stuPerName, stuFamName);
-                    if (studentFound) {
-                        String trac = tractates_dao.getTracName();
-                        int page = getPage();
-                        boolean pageIsValid = tractates_dao.isPageValid(page);
-                        if (pageIsValid) {
-                            boolean getDate = students_tractates_dao.useUserProvidedDate();
-                            recordLearning(
-                                    getDate,
-                                    stuPerName,
-                                    stuFamName,
-                                    trac,
-                                    page);
+            try {
+                switch (choice) {
+                    case (1):
+                        tractates_dao.displayAllTracs();
+                        break;
+                    case (2):
+                        displayOneTrac();
+                        break;
+                    case (3):
+                        students_dao.displayAllStudentNames();
+                        break;
+                    case (4):
+                        addNewTracToDB();
+                        break;
+                    case (5):
+                        addNewStudentToDB();
+                        break;
+                    case (6):
+                        editStudentName();
+                        break;
+                    case (7): // delete student from DB
+                        deleteStudentFromDB();
+                        break;
+                    case (8): // record student learned daf
+                        String stuPerName = students_dao.getStudentPersonalName();
+                        String stuFamName = students_dao.getStudentFamilyName();
+                        boolean studentFound = students_dao.doesStudentExist(stuPerName, stuFamName);
+                        if (studentFound) {
+                            String trac = tractates_dao.getTracName();
+                            int page = getPage();
+                            boolean pageIsValid = tractates_dao.isPageValid(page);
+                            if (pageIsValid) {
+                                boolean getDate = students_tractates_dao.useUserProvidedDate();
+                                recordLearning(
+                                        getDate,
+                                        stuPerName,
+                                        stuFamName,
+                                        trac,
+                                        page);
 
+                            }
                         }
-                    }
-                    break;
-                case (9): // break out of app
-                    continueApp = false;
-                    Messages.goodbye();
-                    break;
-                default:
-                    Messages.invalidInput();
-                    break;
+                        break;
+                    case (9): // break out of app
+                        continueApp = false;
+                        Messages.goodbye();
+                        break;
+                    default:
+                        Messages.invalidInput();
+                        break;
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
             }
         }
+
     }
 
     private static void recordLearning(boolean getDate, String stuPerName, String stuFamName, String trac, int page) {
@@ -157,11 +164,17 @@ public class Application {
         students_dao.addStudentToDB(studentPersonalName, studentFamilyName);
     }
 
-    private static void addNewTracToDB() {
+    private static void addNewTracToDB() throws SQLException {
         String tracName;
-        tracName = tractates_dao.getTracName();
-        int tracPages = tractates_dao.getTracPages();
-        tractates_dao.addTracToDB(tracName, tracPages);
+        Messages.getTracName();
+        tracName = UserInput.getString();
+        boolean tracExists = tractates_dao.doesTracExist(tracName);
+        if(tracExists == false) {
+            Messages.getTracPages();
+            int tracPages = UserInput.getNumPages();
+            if(tracPages > 0) tractates_dao.addTracToDB(tracName, tracPages);
+            else Messages.invalidNumPages();
+        } else Messages.tracAlreadyExists();
     }
 
     private static void displayOneTrac() {
@@ -190,10 +203,10 @@ public class Application {
     }
 
     public static int getUserChoice() {
-            int choice = -1;
-            if(scanner.hasNextInt()) {
-                choice = scanner.nextInt();
-            }
-            return choice;
+        int choice = -1;
+        if (scanner.hasNextInt()) {
+            choice = scanner.nextInt();
+        }
+        return choice;
     }
 }

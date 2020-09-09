@@ -64,15 +64,15 @@ public class Application {
     }
 
     private static void recordLearnedAmud() {
-        String stuPerName = students_dao.getStudentPersonalName();
-        String stuFamName = students_dao.getStudentFamilyName();
+        String stuPerName = UserInput.getStudentPersonalName();
+        String stuFamName = UserInput.getStudentFamilyName();
         boolean studentFound = students_dao.doesStudentExist(stuPerName, stuFamName);
         if (studentFound) {
-            String trac = tractates_dao.getTracName();
+            String trac = UserInput.getTracName();
             int page = getPage();
             boolean pageIsValid = tractates_dao.isPageValid(page);
             if (pageIsValid) {
-                boolean getDate = students_tractates_dao.useUserProvidedDate();
+                boolean getDate = UserInput.getDate();
                 recordLearning(
                         getDate,
                         stuPerName,

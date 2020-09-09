@@ -3,7 +3,7 @@ package application;
 import database.dao.students_dao;
 import database.dao.students_tractates_dao;
 import database.dao.tractates_dao;
-import io.Messages;
+import io.PrintToScreen;
 import io.UserInput;
 
 import java.sql.Date;
@@ -20,7 +20,7 @@ public class Application {
         boolean continueApp = true;
         while (continueApp) {
             printMenu();
-            Messages.getChoice();
+            PrintToScreen.getChoice();
             int choice = getUserChoice();
             try {
                 switch (choice) {
@@ -50,10 +50,10 @@ public class Application {
                         break;
                     case (9): // break out of app
                         continueApp = false;
-                        Messages.goodbye();
+                        PrintToScreen.goodbye();
                         break;
                     default:
-                        Messages.invalidInput();
+                        PrintToScreen.invalidInput();
                         break;
                 }
             } catch (SQLException throwables) {
@@ -101,19 +101,19 @@ public class Application {
     }
 
     private static int getDay() {
-        Messages.getDay();
+        PrintToScreen.getDay();
         String dayStr = scanner.nextLine();
         return Integer.parseInt(dayStr);
     }
 
     private static int getMonth() {
-        Messages.getMonth();
+        PrintToScreen.getMonth();
         String monthStr = scanner.nextLine();
         return Integer.parseInt(monthStr);
     }
 
     private static int getYear() {
-        Messages.getYear();
+        PrintToScreen.getYear();
         String yearStr = scanner.nextLine();
         int year = Integer.parseInt(yearStr);
         return year;
@@ -138,7 +138,7 @@ public class Application {
         boolean studentFound = students_dao.doesStudentExist(studentPersonalName, studentFamilyName);
         if (studentFound) students_dao.deleteStudent(studentPersonalName, studentFamilyName);
         else {
-            Messages.studentNotFound();
+            PrintToScreen.studentNotFound();
         }
         return;
     }
@@ -148,7 +148,7 @@ public class Application {
         String oldStudentFamilyName = students_dao.getStudentFamilyName();
         boolean studentFound = students_dao.doesStudentExist(oldStudentPersonalName, oldStudentFamilyName);
         if (studentFound) {
-            Messages.needNewStudentName();
+            PrintToScreen.needNewStudentName();
             String newStudentPersonalName = students_dao.getStudentPersonalName();
             String newStudentFamilyName = students_dao.getStudentFamilyName();
             students_dao.changeStudentName(
@@ -158,7 +158,7 @@ public class Application {
                     newStudentFamilyName
             );
         } else {
-            Messages.studentNotFound();
+            PrintToScreen.studentNotFound();
         }
     }
 
@@ -170,22 +170,23 @@ public class Application {
 
     private static void addNewTracToDB() throws SQLException {
         String tracName;
-        Messages.getTracName();
+        PrintToScreen.getTracName();
         tracName = UserInput.getString();
         boolean tracExists = tractates_dao.doesTracExist(tracName);
         if(tracExists == false) {
-            Messages.getTracPages();
+            PrintToScreen.getTracPages();
             int tracPages = UserInput.getNumPages();
             if(tracPages > 0) tractates_dao.addTracToDB(tracName, tracPages);
-            else Messages.invalidNumPages();
-        } else Messages.tracAlreadyExists();
+            else PrintToScreen.invalidNumPages();
+        } else PrintToScreen.tracAlreadyExists();
     }
 
-    private static void displayOneTrac() {
-        String tracName = tractates_dao.getTracName();
+    private static void displayOneTrac() throws SQLException {
+        PrintToScreen.getTracName();
+        String tracName = UserInput.getString();
         boolean tracFound = tractates_dao.doesTracExist(tracName);
         if (tracFound) tractates_dao.displayOneTrac(tracName);
-        else Messages.tracNotFound();
+        else PrintToScreen.tracNotFound();
     }
 
     public static void printMenu() {

@@ -9,13 +9,10 @@ public class PrintToScreen {
         System.out.println("Input invalid.");
     }
 
-    public static void displayTrac(String tractate, int pages) {
+    public static void displayTrac(String tracName, int numPages) {
         System.out.println(
-                "Tractate " +
-                        tractate +
-                        " has " +
-                        pages +
-                        " pages");
+                "Tractate " + tracName + " has " + numPages + " pages"
+        );
     }
 
     public static void getTracName() {
@@ -32,5 +29,9 @@ public class PrintToScreen {
 
     public static void tracAlreadyExists() {
         System.out.println("That tractate already exists in the database.");
+    }
+
+    public static void tracNotFound() {
+        System.out.println("That tractate was not found in the database.");
     }
 }

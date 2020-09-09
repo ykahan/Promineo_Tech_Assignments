@@ -85,9 +85,15 @@ public class Application {
     }
 
     private static void recordLearning(boolean getDate, String stuPerName, String stuFamName, String trac, int page) {
+        Date date = null;
         if (getDate) {
-            Date date = getDate();
-            student_tractates_dao.enterNewRow(stuPerName, stuFamName, trac, page, date);
+            while(date == null)
+            date = getDate();
+            if(date != null) student_tractates_dao.enterNewRow(stuPerName, stuFamName, trac, page, date);
+            else {
+                PrintToScreen.dateInvalid();
+                PrintToScreen.tryAgain();
+            }
         } else {
             student_tractates_dao.enterNewRow(stuPerName, stuFamName, trac, page);
         }
@@ -97,26 +103,37 @@ public class Application {
         int year = getYear();
         int month = getMonth();
         int day = getDay();
-        return (Date) new GregorianCalendar(year, month - 1, day).getTime();
+        boolean dateIsValid = isDateValid(year, month, day);
+        if(dateIsValid) return (Date) new GregorianCalendar(year, month - 1, day).getTime();
+        else return null;
+    }
+
+    private static boolean isDateValid(int year, int month, int day) {
+        return year != -1 && month != -1 && day != -1;
     }
 
     private static int getDay() {
+        scanner.nextLine();
         PrintToScreen.getDay();
-        String dayStr = scanner.nextLine();
-        return Integer.parseInt(dayStr);
+        return getInteger();
     }
 
     private static int getMonth() {
+        scanner.nextLine();
         PrintToScreen.getMonth();
-        String monthStr = scanner.nextLine();
-        return Integer.parseInt(monthStr);
+        return getInteger();
+    }
+
+    private static int getInteger() {
+        boolean isInt = scanner.hasNextInt();
+        if (isInt) return scanner.nextInt();
+        else return -1;
     }
 
     private static int getYear() {
+        scanner.nextLine();
         PrintToScreen.getYear();
-        String yearStr = scanner.nextLine();
-        int year = Integer.parseInt(yearStr);
-        return year;
+        return getInteger();
     }
 
     private static long millisSinceEpoch(String year, String month, String day) {
@@ -169,9 +186,8 @@ public class Application {
     }
 
     private static void addNewTracToDB() throws SQLException {
-        String tracName;
         PrintToScreen.getTracName();
-        tracName = UserInput.getString();
+        String tracName = UserInput.getString();
         boolean tracExists = tractates_dao.doesTracExist(tracName);
         if(tracExists == false) {
             PrintToScreen.getTracPages();

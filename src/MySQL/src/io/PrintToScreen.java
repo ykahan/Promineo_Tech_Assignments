@@ -38,4 +38,24 @@ public class PrintToScreen {
     public static void displayStudents(int id, String name) {
         System.out.println("\nID #" + id + ":\tName: " + name);
     }
+
+    public static void getDay() {
+        System.out.println("Day of the month as an integer:");
+    }
+
+    public static void getMonth() {
+        System.out.println("Month as an integer:");
+    }
+
+    public static void getYear() {
+        System.out.println("Year as an integer");
+    }
+
+    public static void dateInvalid() {
+        System.out.println("The date entered was invalid");
+    }
+
+    public static void tryAgain() {
+        System.out.println("Please try again");
+    }
 }

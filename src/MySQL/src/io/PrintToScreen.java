@@ -74,4 +74,8 @@ public class PrintToScreen {
     public static void yForYes(){
         System.out.println("Type \"Y\" or \"Yes\" for yes, or anything else for no.");
     }
+
+    public static void goodbye() {
+        System.out.println("Thank you for using this application.  Goodbye.");
+    }
 }

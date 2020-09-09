@@ -94,9 +94,9 @@ public class Application {
     }
 
     private static int getPage() {
-        int daf = tractates_dao.getDaf();
-        char amud = tractates_dao.getAmud();
-        int page = tractates_dao.dafToPage(daf, amud);
+        int daf = UserInput.getDaf();
+        char amud = UserInput.getAmud();
+        int page = dafToPage(daf, amud);
         return page;
     }
 

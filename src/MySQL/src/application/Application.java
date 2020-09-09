@@ -79,7 +79,7 @@ public class Application {
         }
     }
 
-    private static void recordLearning(boolean getDate, int stuId, int tracId, int page) {
+    private static void recordLearning(boolean getDate, int stuId, int tracId, int page) throws SQLException {
         Date date = null;
         if (getDate) {
             while(date == null)

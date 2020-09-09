@@ -53,4 +53,12 @@ public class UserInput {
         if (isInt) return scanner.nextInt();
         else return -1;
     }
+
+    public static boolean shouldGetDate() {
+        String response = scanner.nextLine();
+        response = response.toLowerCase();
+        if(response.equals("y")) return true;
+        if(response.equals("yes")) return true;
+        return false;
+    }
 }

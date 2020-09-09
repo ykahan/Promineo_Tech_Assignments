@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class TractatesDAO {
+    private static final String DOES_PAGE_EXIST_QUERY =
+            "SELECT COUNT(*) FROM tractates WHERE id = ? AND pages >= ?";
     static Connection conn;
     private static final String DOES_TRACTATE_EXIST_QUERY = "SELECT COUNT(*) FROM tractates WHERE name = ?";
     private static final String DISPLAY_ALL_TRACS_QUERY = "SELECT * FROM tractates";
@@ -59,6 +61,15 @@ public class TractatesDAO {
         pstmt.setString(1, trac);
         ResultSet rset = pstmt.executeQuery();
         return rset.getInt(1);
+    }
+
+    public static boolean isPageValid(int tracId, int page) throws SQLException {
+        if(page < 1) return false;
+        PreparedStatement pstmt = conn.prepareStatement(DOES_PAGE_EXIST_QUERY);
+        pstmt.setInt(1, tracId);
+        pstmt.setInt(2, page);
+        ResultSet rset = pstmt.executeQuery();
+        return rset.getInt(1) > 0;
     }
 }
 

@@ -16,6 +16,8 @@ public class StudentsDAO {
                     "ORDER BY family_name";
     private static final String GET_STUDENT_ID_QUERY =
             "SELECT id FROM students WHERE personal_name = ? AND family_name = ?";
+    private static final String DOES_STUDENT_EXIST_QUERY =
+            "SELECT COUNT(*) WHERE personal_name = ? AND family_name = ?";
     public StudentsDAO() throws SQLException {
         conn = DB_Connection.getConnection();
 
@@ -34,5 +36,13 @@ public class StudentsDAO {
         while(rset.next()) PrintToScreen.displayStudents(
                 rset.getInt(1), rset.getString(2)
         );
+    }
+
+    public static boolean doesStudentExist(String perName, String famName) throws SQLException {
+        PreparedStatement pstmt = conn.prepareStatement(DOES_STUDENT_EXIST_QUERY);
+        pstmt.setString(1, perName);
+        pstmt.setString(2, famName);
+        ResultSet rset = pstmt.executeQuery();
+        return rset.getInt(1) > 0;
     }
 }

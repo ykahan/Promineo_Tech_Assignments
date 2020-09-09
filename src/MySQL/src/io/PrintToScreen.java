@@ -58,4 +58,20 @@ public class PrintToScreen {
     public static void tryAgain() {
         System.out.println("Please try again");
     }
+
+    public static void getPersonalName() {
+        System.out.println("Personal name:");
+    }
+
+    public static void getFamilyName() {
+        System.out.println("Family name:");
+    }
+
+    public static void shouldGetDate() {
+        System.out.println("Do you want to provide a date?");
+    }
+
+    public static void yForYes(){
+        System.out.println("Type \"Y\" or \"Yes\" for yes, or anything else for no.");
+    }
 }

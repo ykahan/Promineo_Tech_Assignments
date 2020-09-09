@@ -63,20 +63,40 @@ public class Application {
     }
 
     private static void recordLearnedAmud() throws SQLException {
-        String stuPerName = UserInput.getStudentPersonalName();
-        String stuFamName = UserInput.getStudentFamilyName();
+        String stuPerName = getPersonalName();
+        String stuFamName = getFamilyName();
         boolean studentFound = StudentsDAO.doesStudentExist(stuPerName, stuFamName);
         if (studentFound) {
             int stuId = StudentsDAO.getStudentId(stuPerName,  stuFamName);
-            String trac = UserInput.getTracName();
+            PrintToScreen.getTracName();
+            String trac = UserInput.getString();
             int tracId = TractatesDAO.getTractateId(trac);
             int page = getPage();
-            boolean pageIsValid = TractatesDAO.isPageValid(page);
+            boolean pageIsValid = TractatesDAO.isPageValid(tracId, page);
             if (pageIsValid) {
-                boolean getDate = UserInput.shouldGetDate();
+                boolean getDate = shouldGetDateFromUser();
                 recordLearning(getDate, stuId, tracId, page);
-            }
-        }
+            } else PrintToScreen.invalidInput();
+        } else PrintToScreen.invalidInput();
+    }
+
+    private static boolean shouldGetDateFromUser() {
+        PrintToScreen.shouldGetDate();
+        PrintToScreen.yForYes();
+        boolean getDate = UserInput.shouldGetDate();
+        return getDate;
+    }
+
+    private static String getFamilyName() {
+        PrintToScreen.getFamilyName();
+        String stuFamName = UserInput.getString();
+        return stuFamName;
+    }
+
+    private static String getPersonalName() {
+        PrintToScreen.getPersonalName();
+        String stuPerName = UserInput.getString();
+        return stuPerName;
     }
 
     private static void recordLearning(boolean getDate, int stuId, int tracId, int page) throws SQLException {

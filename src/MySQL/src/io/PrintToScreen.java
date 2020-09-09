@@ -34,4 +34,8 @@ public class PrintToScreen {
     public static void tracNotFound() {
         System.out.println("That tractate was not found in the database.");
     }
+
+    public static void displayStudents(int id, String name) {
+        System.out.println("\nID #" + id + ":\tName: " + name);
+    }
 }

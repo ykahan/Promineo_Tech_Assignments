@@ -1,6 +1,6 @@
 package io;
 
-public class Messages {
+public class PrintToScreen {
     public static void getChoice() {
         System.out.println("Please enter option number.");
     }

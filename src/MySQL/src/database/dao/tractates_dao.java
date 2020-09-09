@@ -17,6 +17,8 @@ public class tractates_dao {
                     "VALUES(?, ?)";
     private static final String DISPLAY_ONE_TRACTATE_QUERY =
             "SELECT * FROM tractates WHERE name = ?";
+    private static final String GET_TRACTATE_ID_QUERY =
+            "SELECT id FROM tractates WHERE name = ?";
     public tractates_dao() {
         conn = DB_Connection.getConnection();
     }
@@ -50,6 +52,13 @@ public class tractates_dao {
         while(rset.next())
             PrintToScreen.displayTrac(rset.getString(1), rset.getInt(2));
 
+    }
+
+    public static int getTractateId(String trac) throws SQLException {
+        PreparedStatement pstmt = conn.prepareStatement(GET_TRACTATE_ID_QUERY);
+        pstmt.setString(1, trac);
+        ResultSet rset = pstmt.executeQuery();
+        return rset.getInt(1);
     }
 }
 

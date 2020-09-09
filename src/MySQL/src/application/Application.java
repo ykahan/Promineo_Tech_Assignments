@@ -1,7 +1,7 @@
 package application;
 
 import database.dao.students_dao;
-import database.dao.students_tractates_dao;
+import database.dao.StudentsTractatesDAO;
 import database.dao.tractates_dao;
 import io.PrintToScreen;
 import io.UserInput;
@@ -9,7 +9,6 @@ import io.UserInput;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Arrays;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Scanner;
 
@@ -63,33 +62,35 @@ public class Application {
 
     }
 
-    private static void recordLearnedAmud() {
+    private static void recordLearnedAmud() throws SQLException {
         String stuPerName = UserInput.getStudentPersonalName();
         String stuFamName = UserInput.getStudentFamilyName();
         boolean studentFound = students_dao.doesStudentExist(stuPerName, stuFamName);
         if (studentFound) {
+            int stuId = students_dao.getStudentId(stuPerName,  stuFamName);
             String trac = UserInput.getTracName();
+            int tracId = tractates_dao.getTractateId(trac);
             int page = getPage();
             boolean pageIsValid = tractates_dao.isPageValid(page);
             if (pageIsValid) {
                 boolean getDate = UserInput.shouldGetDate();
-                recordLearning(getDate, stuPerName, stuFamName, trac, page);
+                recordLearning(getDate, stuId, tracId, page);
             }
         }
     }
 
-    private static void recordLearning(boolean getDate, String stuPerName, String stuFamName, String trac, int page) {
+    private static void recordLearning(boolean getDate, int stuId, int tracId, int page) {
         Date date = null;
         if (getDate) {
             while(date == null)
             date = UserInput.getDate();
-            if(date != null) student_tractates_dao.enterNewRow(stuPerName, stuFamName, trac, page, date);
+            if(date != null) StudentsTractatesDAO.enterNewRow(stuId, tracId, page, date);
             else {
                 PrintToScreen.dateInvalid();
                 PrintToScreen.tryAgain();
             }
         } else {
-            student_tractates_dao.enterNewRow(stuPerName, stuFamName, trac, page);
+            StudentsTractatesDAO.enterNewRow(stuId, tracId, page);
         }
     }
 

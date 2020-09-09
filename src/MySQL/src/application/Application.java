@@ -1,8 +1,8 @@
 package application;
 
-import database.dao.students_dao;
+import database.dao.StudentsDAO;
 import database.dao.StudentsTractatesDAO;
-import database.dao.tractates_dao;
+import database.dao.TractatesDAO;
 import io.PrintToScreen;
 import io.UserInput;
 
@@ -24,13 +24,13 @@ public class Application {
             try {
                 switch (choice) {
                     case (1):
-                        tractates_dao.displayAllTracs();
+                        TractatesDAO.displayAllTracs();
                         break;
                     case (2):
                         displayOneTrac();
                         break;
                     case (3):
-                        students_dao.displayAllStudentNames();
+                        StudentsDAO.displayAllStudentNames();
                         break;
                     case (4):
                         addNewTracToDB();
@@ -65,13 +65,13 @@ public class Application {
     private static void recordLearnedAmud() throws SQLException {
         String stuPerName = UserInput.getStudentPersonalName();
         String stuFamName = UserInput.getStudentFamilyName();
-        boolean studentFound = students_dao.doesStudentExist(stuPerName, stuFamName);
+        boolean studentFound = StudentsDAO.doesStudentExist(stuPerName, stuFamName);
         if (studentFound) {
-            int stuId = students_dao.getStudentId(stuPerName,  stuFamName);
+            int stuId = StudentsDAO.getStudentId(stuPerName,  stuFamName);
             String trac = UserInput.getTracName();
-            int tracId = tractates_dao.getTractateId(trac);
+            int tracId = TractatesDAO.getTractateId(trac);
             int page = getPage();
-            boolean pageIsValid = tractates_dao.isPageValid(page);
+            boolean pageIsValid = TractatesDAO.isPageValid(page);
             if (pageIsValid) {
                 boolean getDate = UserInput.shouldGetDate();
                 recordLearning(getDate, stuId, tracId, page);
@@ -104,8 +104,8 @@ public class Application {
     private static void deleteStudentFromDB() {
         String studentPersonalName = getStudentPersonalName();
         String studentFamilyName = getStudentFamilyName();
-        boolean studentFound = students_dao.doesStudentExist(studentPersonalName, studentFamilyName);
-        if (studentFound) students_dao.deleteStudent(studentPersonalName, studentFamilyName);
+        boolean studentFound = StudentsDAO.doesStudentExist(studentPersonalName, studentFamilyName);
+        if (studentFound) StudentsDAO.deleteStudent(studentPersonalName, studentFamilyName);
         else {
             PrintToScreen.studentNotFound();
         }
@@ -113,14 +113,14 @@ public class Application {
     }
 
     private static void editStudentName() {
-        String oldStudentPersonalName = students_dao.getStudentPersonalName();
-        String oldStudentFamilyName = students_dao.getStudentFamilyName();
-        boolean studentFound = students_dao.doesStudentExist(oldStudentPersonalName, oldStudentFamilyName);
+        String oldStudentPersonalName = StudentsDAO.getStudentPersonalName();
+        String oldStudentFamilyName = StudentsDAO.getStudentFamilyName();
+        boolean studentFound = StudentsDAO.doesStudentExist(oldStudentPersonalName, oldStudentFamilyName);
         if (studentFound) {
             PrintToScreen.needNewStudentName();
-            String newStudentPersonalName = students_dao.getStudentPersonalName();
-            String newStudentFamilyName = students_dao.getStudentFamilyName();
-            students_dao.changeStudentName(
+            String newStudentPersonalName = StudentsDAO.getStudentPersonalName();
+            String newStudentFamilyName = StudentsDAO.getStudentFamilyName();
+            StudentsDAO.changeStudentName(
                     oldStudentPersonalName,
                     oldStudentFamilyName,
                     newStudentPersonalName,
@@ -132,19 +132,19 @@ public class Application {
     }
 
     private static void addNewStudentToDB() {
-        String studentPersonalName = students_dao.getStudentPersonalName();
-        String studentFamilyName = students_dao.getStudentFamilyName();
-        students_dao.addStudentToDB(studentPersonalName, studentFamilyName);
+        String studentPersonalName = StudentsDAO.getStudentPersonalName();
+        String studentFamilyName = StudentsDAO.getStudentFamilyName();
+        StudentsDAO.addStudentToDB(studentPersonalName, studentFamilyName);
     }
 
     private static void addNewTracToDB() throws SQLException {
         PrintToScreen.getTracName();
         String tracName = UserInput.getString();
-        boolean tracExists = tractates_dao.doesTracExist(tracName);
+        boolean tracExists = TractatesDAO.doesTracExist(tracName);
         if(tracExists == false) {
             PrintToScreen.getTracPages();
             int tracPages = UserInput.getNumPages();
-            if(tracPages > 0) tractates_dao.addTracToDB(tracName, tracPages);
+            if(tracPages > 0) TractatesDAO.addTracToDB(tracName, tracPages);
             else PrintToScreen.invalidNumPages();
         } else PrintToScreen.tracAlreadyExists();
     }
@@ -152,8 +152,8 @@ public class Application {
     private static void displayOneTrac() throws SQLException {
         PrintToScreen.getTracName();
         String tracName = UserInput.getString();
-        boolean tracFound = tractates_dao.doesTracExist(tracName);
-        if (tracFound) tractates_dao.displayOneTrac(tracName);
+        boolean tracFound = TractatesDAO.doesTracExist(tracName);
+        if (tracFound) TractatesDAO.displayOneTrac(tracName);
         else PrintToScreen.tracNotFound();
     }
 

@@ -8,7 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class students_dao {
+public class StudentsDAO {
     static Connection conn;
     private static final String DISPLAY_ALL_STUDENTS_QUERY =
             "SELECT id, CONCAT(family_name, ', ', personal_name) AS 'Students' " +
@@ -16,7 +16,7 @@ public class students_dao {
                     "ORDER BY family_name";
     private static final String GET_STUDENT_ID_QUERY =
             "SELECT id FROM students WHERE personal_name = ? AND family_name = ?";
-    public students_dao() throws SQLException {
+    public StudentsDAO() throws SQLException {
         conn = DB_Connection.getConnection();
 
     }

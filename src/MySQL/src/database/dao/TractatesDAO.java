@@ -8,7 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class tractates_dao {
+public class TractatesDAO {
     static Connection conn;
     private static final String DOES_TRACTATE_EXIST_QUERY = "SELECT COUNT(*) FROM tractates WHERE name = ?";
     private static final String DISPLAY_ALL_TRACS_QUERY = "SELECT * FROM tractates";
@@ -19,7 +19,7 @@ public class tractates_dao {
             "SELECT * FROM tractates WHERE name = ?";
     private static final String GET_TRACTATE_ID_QUERY =
             "SELECT id FROM tractates WHERE name = ?";
-    public tractates_dao() {
+    public TractatesDAO() {
         conn = DB_Connection.getConnection();
     }
 

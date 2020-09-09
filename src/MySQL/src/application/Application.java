@@ -46,24 +46,7 @@ public class Application {
                         deleteStudentFromDB();
                         break;
                     case (8): // record student learned daf
-                        String stuPerName = students_dao.getStudentPersonalName();
-                        String stuFamName = students_dao.getStudentFamilyName();
-                        boolean studentFound = students_dao.doesStudentExist(stuPerName, stuFamName);
-                        if (studentFound) {
-                            String trac = tractates_dao.getTracName();
-                            int page = getPage();
-                            boolean pageIsValid = tractates_dao.isPageValid(page);
-                            if (pageIsValid) {
-                                boolean getDate = students_tractates_dao.useUserProvidedDate();
-                                recordLearning(
-                                        getDate,
-                                        stuPerName,
-                                        stuFamName,
-                                        trac,
-                                        page);
-
-                            }
-                        }
+                        recordLearnedAmud();
                         break;
                     case (9): // break out of app
                         continueApp = false;
@@ -78,6 +61,27 @@ public class Application {
             }
         }
 
+    }
+
+    private static void recordLearnedAmud() {
+        String stuPerName = students_dao.getStudentPersonalName();
+        String stuFamName = students_dao.getStudentFamilyName();
+        boolean studentFound = students_dao.doesStudentExist(stuPerName, stuFamName);
+        if (studentFound) {
+            String trac = tractates_dao.getTracName();
+            int page = getPage();
+            boolean pageIsValid = tractates_dao.isPageValid(page);
+            if (pageIsValid) {
+                boolean getDate = students_tractates_dao.useUserProvidedDate();
+                recordLearning(
+                        getDate,
+                        stuPerName,
+                        stuFamName,
+                        trac,
+                        page);
+
+            }
+        }
     }
 
     private static void recordLearning(boolean getDate, String stuPerName, String stuFamName, String trac, int page) {

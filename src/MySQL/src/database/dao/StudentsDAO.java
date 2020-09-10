@@ -13,6 +13,8 @@ public class StudentsDAO {
             "DELETE FROM students WHERE id = ?";
     private static final String CHANGE_STUDENT_NAME =
             "UPDATE students SET personal_name = ?, family_name = ? WHERE id = ?";
+    private static final String ADD_NEW_STUDENT =
+            "INSERT INTO students(personal_name, family_name) VALUES(?, ?)";
     static Connection conn;
     private static final String DISPLAY_ALL_STUDENTS_QUERY =
             "SELECT id, CONCAT(family_name, ', ', personal_name) AS 'Students' " +
@@ -60,6 +62,13 @@ public class StudentsDAO {
         pstmt.setString(1, personalName);
         pstmt.setString(2, familyName);
         pstmt.setInt(3, stuId);
+        pstmt.execute();
+    }
+
+    public static void addStudentToDB(String personalName, String familyName) throws SQLException {
+        PreparedStatement pstmt = conn.prepareStatement(ADD_NEW_STUDENT);
+        pstmt.setString(1, personalName);
+        pstmt.setString(2, familyName);
         pstmt.execute();
     }
 }

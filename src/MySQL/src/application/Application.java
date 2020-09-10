@@ -164,9 +164,10 @@ public class Application {
         }
     }
 
-    private static void addNewStudentToDB() {
-        String studentPersonalName = StudentsDAO.getStudentPersonalName();
-        String studentFamilyName = StudentsDAO.getStudentFamilyName();
+    private static void addNewStudentToDB() throws SQLException {
+        PrintToScreen.getNewStudentName();
+        String studentPersonalName = getPersonalName();
+        String studentFamilyName = getFamilyName();
         StudentsDAO.addStudentToDB(studentPersonalName, studentFamilyName);
     }
 

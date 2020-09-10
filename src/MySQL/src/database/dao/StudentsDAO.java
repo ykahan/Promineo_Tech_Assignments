@@ -33,7 +33,7 @@ public class StudentsDAO {
 
     public static void displayAllStudentNames() throws SQLException {
         ResultSet rset = conn.prepareStatement(DISPLAY_ALL_STUDENTS_QUERY).executeQuery();
-        while(rset.next()) PrintToScreen.displayStudents(
+        while(rset.next()) PrintToScreen.displayStudent(
                 rset.getInt(1), rset.getString(2)
         );
     }

@@ -145,16 +145,17 @@ public class Application {
     }
 
     private static void editStudentName() throws SQLException {
-        String oldStudentPersonalName = StudentsDAO.getStudentPersonalName();
-        String oldStudentFamilyName = StudentsDAO.getStudentFamilyName();
+        PrintToScreen.getOldStudentName();
+        String oldStudentPersonalName = getPersonalName();
+        String oldStudentFamilyName = getFamilyName();
         boolean studentFound = StudentsDAO.doesStudentExist(oldStudentPersonalName, oldStudentFamilyName);
         if (studentFound) {
-            PrintToScreen.needNewStudentName();
-            String newStudentPersonalName = StudentsDAO.getStudentPersonalName();
-            String newStudentFamilyName = StudentsDAO.getStudentFamilyName();
+            int stuId = StudentsDAO.getStudentId(oldStudentPersonalName, oldStudentFamilyName);
+            PrintToScreen.getNewStudentName();
+            String newStudentPersonalName = getPersonalName();
+            String newStudentFamilyName = getFamilyName();
             StudentsDAO.changeStudentName(
-                    oldStudentPersonalName,
-                    oldStudentFamilyName,
+                    stuId,
                     newStudentPersonalName,
                     newStudentFamilyName
             );

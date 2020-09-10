@@ -11,6 +11,8 @@ import java.sql.SQLException;
 public class StudentsDAO {
     private static final String DELETE_STUDENT =
             "DELETE FROM students WHERE id = ?";
+    private static final String CHANGE_STUDENT_NAME =
+            "UPDATE students SET personal_name = ?, family_name = ? WHERE id = ?";
     static Connection conn;
     private static final String DISPLAY_ALL_STUDENTS_QUERY =
             "SELECT id, CONCAT(family_name, ', ', personal_name) AS 'Students' " +
@@ -50,6 +52,14 @@ public class StudentsDAO {
     public static void deleteStudent(int stuId) throws SQLException {
         PreparedStatement pstmt = conn.prepareStatement(DELETE_STUDENT);
         pstmt.setInt(1, stuId);
+        pstmt.execute();
+    }
+
+    public static void changeStudentName(int stuId, String personalName, String familyName) throws SQLException {
+        PreparedStatement pstmt = conn.prepareStatement(CHANGE_STUDENT_NAME);
+        pstmt.setString(1, personalName);
+        pstmt.setString(2, familyName);
+        pstmt.setInt(3, stuId);
         pstmt.execute();
     }
 }

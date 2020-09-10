@@ -90,4 +90,12 @@ public class PrintToScreen {
     public static void studentNotFound() {
         System.out.println(MessagesRepository.studentNotFound());
     }
+
+    public static void getOldStudentName() {
+        System.out.println(MessagesRepository.getOldStudentName());
+    }
+
+    public static void getNewStudentName() {
+        System.out.println(MessagesRepository.getNewStudentName());
+    }
 }

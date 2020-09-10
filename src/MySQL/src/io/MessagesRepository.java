@@ -88,4 +88,17 @@ public class MessagesRepository {
     public static String studentNotFound() {
         return "Student not found in database.";
     }
+
+    public static String getOldStudentName() {
+        return getStudentName("old");
+    }
+
+    public static String getNewStudentName() {
+        return getStudentName("new");
+    }
+
+    private static String getStudentName(String descriptor){
+        return "Please provide " + descriptor + " name of student.";
+    }
+
 }

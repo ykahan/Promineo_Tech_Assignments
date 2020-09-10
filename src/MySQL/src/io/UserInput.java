@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class UserInput {
     private static Scanner scanner = new Scanner(System.in);
+
     public static String getString() {
         return scanner.nextLine();
     }
@@ -79,5 +80,14 @@ public class UserInput {
             amud = response.charAt(0);
         }
         return amud;
+    }
+
+    public static int getUserChoice() {
+        int choice = -1;
+        if (scanner.hasNextInt()) {
+            choice = scanner.nextInt();
+            scanner.nextLine();
+        }
+        return choice;
     }
 }

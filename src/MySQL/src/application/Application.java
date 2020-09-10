@@ -13,14 +13,14 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Application {
-    private static Scanner scanner = new Scanner(System.in);
+//    private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         boolean continueApp = true;
         while (continueApp) {
             printMenu();
             PrintToScreen.getChoice();
-            int choice = getUserChoice();
+            int choice = UserInput.getUserChoice();
             try {
                 switch (choice) {
                     case (1):
@@ -207,13 +207,5 @@ public class Application {
         for (int i = 0; i < choices.size(); i++) {
             System.out.println("Option #" + (i + 1) + ": " + choices.get(i));
         }
-    }
-
-    public static int getUserChoice() {
-        int choice = -1;
-        if (scanner.hasNextInt()) {
-            choice = scanner.nextInt();
-        }
-        return choice;
     }
 }

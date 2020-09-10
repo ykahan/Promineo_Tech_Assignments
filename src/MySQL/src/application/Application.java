@@ -121,7 +121,7 @@ public class Application {
         return page;
     }
 
-    private static void deleteStudentFromDB() {
+    private static void deleteStudentFromDB() throws SQLException {
         String studentPersonalName = getStudentPersonalName();
         String studentFamilyName = getStudentFamilyName();
         boolean studentFound = StudentsDAO.doesStudentExist(studentPersonalName, studentFamilyName);
@@ -132,7 +132,7 @@ public class Application {
         return;
     }
 
-    private static void editStudentName() {
+    private static void editStudentName() throws SQLException {
         String oldStudentPersonalName = StudentsDAO.getStudentPersonalName();
         String oldStudentFamilyName = StudentsDAO.getStudentFamilyName();
         boolean studentFound = StudentsDAO.doesStudentExist(oldStudentPersonalName, oldStudentFamilyName);

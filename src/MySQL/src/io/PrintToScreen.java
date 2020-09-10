@@ -2,80 +2,78 @@ package io;
 
 public class PrintToScreen {
     public static void getChoice() {
-        System.out.println("Please enter option number.");
+        System.out.println(MessagesRepository.getChoice());
     }
 
     public static void invalidInput() {
-        System.out.println("Input invalid.");
+        System.out.println(MessagesRepository.invalidInput());
     }
 
     public static void displayTrac(String tracName, int numPages) {
-        System.out.println(
-                "Tractate " + tracName + " has " + numPages + " pages"
-        );
+        System.out.println(MessagesRepository.displayTrac(tracName, numPages));
     }
 
     public static void getTracName() {
-        System.out.println("Enter tractate name.");
+        System.out.println(MessagesRepository.getTracName());
     }
 
     public static void getTracPages() {
-        System.out.println("Enter number of pages");
+        System.out.println(MessagesRepository.getTracPages());
     }
 
     public static void invalidNumPages() {
-        System.out.println("Number of pages must be a positive integer.");
+        System.out.println(MessagesRepository.invalidNumPages());
     }
 
     public static void tracAlreadyExists() {
-        System.out.println("That tractate already exists in the database.");
+        System.out.println(MessagesRepository.tracAlreadyExists());
     }
 
     public static void tracNotFound() {
-        System.out.println("That tractate was not found in the database.");
+        System.out.println(MessagesRepository.tracNotFound());
     }
 
-    public static void displayStudents(int id, String name) {
-        System.out.println("\nID #" + id + ":\tName: " + name);
+    public static void displayStudent(int id, String name) {
+        System.out.println(MessagesRepository.displayStudent(id, name));
     }
 
     public static void getDay() {
-        System.out.println("Day of the month as an integer:");
+        System.out.println(MessagesRepository.getDay());
     }
 
     public static void getMonth() {
-        System.out.println("Month as an integer:");
+        System.out.println(MessagesRepository.getMonth());
     }
 
     public static void getYear() {
-        System.out.println("Year as an integer");
+        System.out.println(MessagesRepository.getYear());
     }
 
     public static void dateInvalid() {
-        System.out.println("The date entered was invalid");
+        System.out.println(MessagesRepository.dateInvalid());
     }
 
     public static void tryAgain() {
-        System.out.println("Please try again");
+        System.out.println(MessagesRepository.tryAgain());
     }
 
     public static void getPersonalName() {
-        System.out.println("Personal name:");
+        System.out.println(MessagesRepository.getPersonalName());
     }
 
     public static void getFamilyName() {
-        System.out.println("Family name:");
+        System.out.println(MessagesRepository.getFamilyName());
     }
 
     public static void shouldGetDate() {
-        System.out.println("Do you want to provide a date?");
+        System.out.println(MessagesRepository.shouldGetDate());
     }
 
     public static void yForYes(){
-        System.out.println("Type \"Y\" or \"Yes\" for yes, or anything else for no.");
+        System.out.println(MessagesRepository.yForYes());
     }
 
     public static void goodbye() {
-        System.out.println("Thank you for using this application.  Goodbye.");
+        System.out.println(MessagesRepository.goodbye());
     }
 }

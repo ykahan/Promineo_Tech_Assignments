@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class TractatesDAO {
     private static final String DOES_PAGE_EXIST_QUERY =
             "SELECT COUNT(*) FROM tractates WHERE id = ? AND pages >= ?";
-    static Connection conn;
+    static Connection conn = DB_Connection.getConnection();
     private static final String DOES_TRACTATE_EXIST_QUERY = "SELECT COUNT(*) FROM tractates WHERE name = ?";
     private static final String DISPLAY_ALL_TRACS_QUERY = "SELECT * FROM tractates";
     private static final String INSERT_NEW_TRACTATE =
@@ -21,22 +21,21 @@ public class TractatesDAO {
             "SELECT * FROM tractates WHERE name = ?";
     private static final String GET_TRACTATE_ID_QUERY =
             "SELECT id FROM tractates WHERE name = ?";
-    public TractatesDAO() {
-        conn = DB_Connection.getConnection();
-    }
 
     public static void displayAllTracs() throws SQLException {
         PreparedStatement pstmt = conn.prepareStatement(DISPLAY_ALL_TRACS_QUERY);
         ResultSet rset = pstmt.executeQuery();
-        if (rset.next()) {
-            PrintToScreen.displayTrac(rset.getString(1), rset.getInt(2));
+        while (rset.next()) {
+            PrintToScreen.displayTrac(rset.getString(2), rset.getInt(3));
         }
     }
 
     public static boolean doesTracExist(String tracName) throws SQLException {
-        PreparedStatement pstm = conn.prepareStatement(DOES_TRACTATE_EXIST_QUERY);
-        ResultSet rset = pstm.executeQuery();
-        int count = rset.getInt(1);
+        PreparedStatement pstmt = conn.prepareStatement(DOES_TRACTATE_EXIST_QUERY);
+        pstmt.setString(1, tracName);
+        ResultSet rset = pstmt.executeQuery();
+        int count = -1;
+        while(rset.next()) {count = rset.getInt(1);}
         return count > 0;
     }
 
@@ -52,7 +51,7 @@ public class TractatesDAO {
         pstmt.setString(1, tracName);
         ResultSet rset = pstmt.executeQuery();
         while(rset.next())
-            PrintToScreen.displayTrac(rset.getString(1), rset.getInt(2));
+            PrintToScreen.displayTrac(rset.getString(2), rset.getInt(3));
 
     }
 

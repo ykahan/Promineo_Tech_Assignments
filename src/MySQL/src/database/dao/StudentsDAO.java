@@ -15,18 +15,16 @@ public class StudentsDAO {
             "UPDATE students SET personal_name = ?, family_name = ? WHERE id = ?";
     private static final String ADD_NEW_STUDENT =
             "INSERT INTO students(personal_name, family_name) VALUES(?, ?)";
-    static Connection conn;
+    static Connection  conn = DB_Connection.getConnection();
     private static final String DISPLAY_ALL_STUDENTS_QUERY =
-            "SELECT id, CONCAT(family_name, ', ', personal_name) AS 'Students' " +
+            "SELECT id, CONCAT(family_name, ', ', personal_name) " +
                     "FROM students " +
                     "ORDER BY family_name";
     private static final String GET_STUDENT_ID_QUERY =
             "SELECT id FROM students WHERE personal_name = ? AND family_name = ?";
     private static final String DOES_STUDENT_EXIST_QUERY =
             "SELECT COUNT(*) WHERE personal_name = ? AND family_name = ?";
-    public StudentsDAO() throws SQLException {
-        conn = DB_Connection.getConnection();
-    }
+
 
     public static int getStudentId(String perName, String famName) throws SQLException {
         PreparedStatement pstmt = conn.prepareStatement(GET_STUDENT_ID_QUERY);
@@ -37,7 +35,8 @@ public class StudentsDAO {
     }
 
     public static void displayAllStudentNames() throws SQLException {
-        ResultSet rset = conn.prepareStatement(DISPLAY_ALL_STUDENTS_QUERY).executeQuery();
+        PreparedStatement pstmt = conn.prepareStatement(DISPLAY_ALL_STUDENTS_QUERY);
+        ResultSet rset = pstmt.executeQuery();
         while(rset.next()) PrintToScreen.displayStudent(
                 rset.getInt(1), rset.getString(2)
         );

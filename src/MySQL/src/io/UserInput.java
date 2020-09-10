@@ -61,4 +61,23 @@ public class UserInput {
         if(response.equals("yes")) return true;
         return false;
     }
+
+    public static int getInt() {
+        int num = -1;
+        if(scanner.hasNext()) {
+            num = scanner.nextInt();
+            scanner.nextLine();
+        }
+        return num;
+    }
+
+    public static char getAmud() {
+        char amud = 'n';
+        String response = scanner.nextLine();
+        response = response.toLowerCase();
+        if(response.equals("a") || response.equals("b")){
+            amud = response.charAt(0);
+        }
+        return amud;
+    }
 }

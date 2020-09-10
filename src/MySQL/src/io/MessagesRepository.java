@@ -76,4 +76,16 @@ public class MessagesRepository {
     public static String getChoice() {
         return "Please enter option number.";
     }
+
+    public static String getDaf() {
+        return "Daf:";
+    }
+
+    public static String getAmud() {
+        return "Amud (A or B):";
+    }
+
+    public static String studentNotFound() {
+        return "Student not found in database.";
+    }
 }

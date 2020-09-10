@@ -1,5 +1,7 @@
 package io;
 
+import java.sql.SQLOutput;
+
 public class PrintToScreen {
     public static void getChoice() {
         System.out.println(MessagesRepository.getChoice());
@@ -75,5 +77,17 @@ public class PrintToScreen {
 
     public static void goodbye() {
         System.out.println(MessagesRepository.goodbye());
+    }
+
+    public static void getDaf() {
+        System.out.println(MessagesRepository.getDaf());
+    }
+
+    public static void getAmud() {
+        System.out.println(MessagesRepository.getAmud());
+    }
+
+    public static void studentNotFound() {
+        System.out.println(MessagesRepository.studentNotFound());
     }
 }

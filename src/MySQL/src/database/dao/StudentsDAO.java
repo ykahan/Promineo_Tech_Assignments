@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class StudentsDAO {
+    private static final String DELETE_STUDENT =
+            "DELETE FROM students WHERE id = ?";
     static Connection conn;
     private static final String DISPLAY_ALL_STUDENTS_QUERY =
             "SELECT id, CONCAT(family_name, ', ', personal_name) AS 'Students' " +
@@ -20,7 +22,6 @@ public class StudentsDAO {
             "SELECT COUNT(*) WHERE personal_name = ? AND family_name = ?";
     public StudentsDAO() throws SQLException {
         conn = DB_Connection.getConnection();
-
     }
 
     public static int getStudentId(String perName, String famName) throws SQLException {
@@ -44,5 +45,11 @@ public class StudentsDAO {
         pstmt.setString(2, famName);
         ResultSet rset = pstmt.executeQuery();
         return rset.getInt(1) > 0;
+    }
+
+    public static void deleteStudent(int stuId) throws SQLException {
+        PreparedStatement pstmt = conn.prepareStatement(DELETE_STUDENT);
+        pstmt.setInt(1, stuId);
+        pstmt.execute();
     }
 }

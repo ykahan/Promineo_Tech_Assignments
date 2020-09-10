@@ -89,14 +89,12 @@ public class Application {
 
     private static String getFamilyName() {
         PrintToScreen.getFamilyName();
-        String stuFamName = UserInput.getString();
-        return stuFamName;
+        return UserInput.getString();
     }
 
     private static String getPersonalName() {
         PrintToScreen.getPersonalName();
-        String stuPerName = UserInput.getString();
-        return stuPerName;
+        return UserInput.getString();
     }
 
     private static void recordLearning(boolean getDate, int stuId, int tracId, int page) throws SQLException {
@@ -115,21 +113,35 @@ public class Application {
     }
 
     private static int getPage() {
-        int daf = UserInput.getDaf();
+        PrintToScreen.getDaf();
+        int daf = UserInput.getInt();
+        PrintToScreen.getAmud();
         char amud = UserInput.getAmud();
         int page = dafToPage(daf, amud);
         return page;
     }
 
+    private static int dafToPage(int daf, char amud) {
+        // minimum daf in all tractates is 2, and 'n' has been chosen to denote an invalid amud
+        if(daf > 1 && amud != 'n'){
+            // formula to convert daf and amud into page number, with 2a denoting "1," 2b denoting "2", etc
+            if(amud == 'a') return 2 * daf - 3;
+            return 2 * daf - 2;
+        }
+        return - 1;
+    }
+
     private static void deleteStudentFromDB() throws SQLException {
-        String studentPersonalName = getStudentPersonalName();
-        String studentFamilyName = getStudentFamilyName();
+        String studentPersonalName = getPersonalName();
+        String studentFamilyName = getFamilyName();
         boolean studentFound = StudentsDAO.doesStudentExist(studentPersonalName, studentFamilyName);
-        if (studentFound) StudentsDAO.deleteStudent(studentPersonalName, studentFamilyName);
+        if (studentFound) {
+            int stuId = StudentsDAO.getStudentId(studentPersonalName, studentFamilyName);
+            StudentsDAO.deleteStudent(stuId);
+        }
         else {
             PrintToScreen.studentNotFound();
         }
-        return;
     }
 
     private static void editStudentName() throws SQLException {

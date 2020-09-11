@@ -15,7 +15,7 @@ public class StudentsDAO {
             "UPDATE students SET personal_name = ?, family_name = ? WHERE id = ?";
     private static final String ADD_NEW_STUDENT =
             "INSERT INTO students(personal_name, family_name) VALUES(?, ?)";
-    static Connection  conn = DB_Connection.getConnection();
+    static Connection conn = DB_Connection.getConnection();
     private static final String DISPLAY_ALL_STUDENTS_QUERY =
             "SELECT id, CONCAT(family_name, ', ', personal_name) " +
                     "FROM students " +
@@ -23,7 +23,7 @@ public class StudentsDAO {
     private static final String GET_STUDENT_ID_QUERY =
             "SELECT id FROM students WHERE personal_name = ? AND family_name = ?";
     private static final String DOES_STUDENT_EXIST_QUERY =
-            "SELECT COUNT(*) WHERE personal_name = ? AND family_name = ?";
+            "SELECT COUNT(*) FROM students WHERE personal_name = ? AND family_name = ?";
 
 
     public static int getStudentId(String perName, String famName) throws SQLException {
@@ -31,13 +31,14 @@ public class StudentsDAO {
         pstmt.setString(1, perName);
         pstmt.setString(2, famName);
         ResultSet rset = pstmt.executeQuery();
-        return rset.getInt(1);
+        while(rset.next()) return rset.getInt(1);
+        return -1;
     }
 
     public static void displayAllStudentNames() throws SQLException {
         PreparedStatement pstmt = conn.prepareStatement(DISPLAY_ALL_STUDENTS_QUERY);
         ResultSet rset = pstmt.executeQuery();
-        while(rset.next()) PrintToScreen.displayStudent(
+        while (rset.next()) PrintToScreen.displayStudent(
                 rset.getInt(1), rset.getString(2)
         );
     }
@@ -47,7 +48,9 @@ public class StudentsDAO {
         pstmt.setString(1, perName);
         pstmt.setString(2, famName);
         ResultSet rset = pstmt.executeQuery();
-        return rset.getInt(1) > 0;
+        while (rset.next())
+            return rset.getInt(1) > 0;
+        return false;
     }
 
     public static void deleteStudent(int stuId) throws SQLException {

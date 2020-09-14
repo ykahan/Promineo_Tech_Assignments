@@ -22,9 +22,9 @@ public class UserInput {
     }
 
     public static Date getDate() {
-        int year = getYear();
-        int month = getMonth();
-        int day = getDay();
+        int year = getDateUnit("year");
+        int month = getDateUnit("month");
+        int day = getDateUnit("day");
         boolean dateIsValid = isDateValid(year, month, day);
         if(dateIsValid) {
             String date = year + "-" + month + "-" + day;
@@ -34,25 +34,73 @@ public class UserInput {
         else return null;
     }
 
+    private static int getDateUnit(String type){
+        PrintToScreen.getDateUnit(type);
+        int unit = scanner.nextInt();
+        scanner.nextLine();
+        return unit;
+    }
+
     private static boolean isDateValid(int year, int month, int day) {
-        return year != -1 && month != -1 && day != -1;
+        boolean dateIsValid = true;
+        dateIsValid = yearIsValid(year);
+        if(dateIsValid) dateIsValid = monthIsValid(month);
+        if (dateIsValid) dateIsValid = dayIsValid(year, month, day);
+        return dateIsValid;
+    }
+
+    private static boolean dayIsValid(int year, int month, int day) {
+        if(day < 1) return false;
+        if(month < 1) return false;
+        if(month > 12) return false;
+        if(year < 1000) return false;
+        if(year > 9999) return false;
+        switch(month){
+            case(1):
+            case(3):
+            case(5):
+            case(7):
+            case(8):
+            case(10):
+            case(12):
+                return day <= 31;
+            case(4):
+            case(6):
+            case(9):
+            case(11):
+                return day <= 30;
+            case(2):
+                if(year % 400 == 0) return day <= 29;
+                else if(year % 100 == 0) return day <= 28;
+                else if(year % 4 == 0) return day <= 29;
+                else return day <= 28;
+        }
+        return false;
+    }
+
+    private static boolean monthIsValid(int month) {
+        return month >= 1 && month <= 12;
+    }
+
+    private static boolean yearIsValid(int year) {
+        return year >= 1000 && year <= 9999;
     }
 
     private static int getDay() {
-        scanner.nextLine();
         PrintToScreen.getDay();
+        scanner.nextLine();
         return getInteger();
     }
 
     private static int getMonth() {
-        scanner.nextLine();
         PrintToScreen.getMonth();
+        scanner.nextLine();
         return getInteger();
     }
 
     private static int getYear() {
-        scanner.nextLine();
         PrintToScreen.getYear();
+        scanner.nextLine();
         return getInteger();
     }
 

@@ -98,4 +98,8 @@ public class PrintToScreen {
     public static void getNewStudentName() {
         System.out.println(MessagesRepository.getNewStudentName());
     }
+
+    public static void getDateUnit(String type) {
+        System.out.println(MessagesRepository.getDateUnit(type));
+    }
 }

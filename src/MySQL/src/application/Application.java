@@ -67,7 +67,7 @@ public class Application {
         String stuFamName = getFamilyName();
         boolean studentFound = StudentsDAO.doesStudentExist(stuPerName, stuFamName);
         if (studentFound) {
-            int stuId = StudentsDAO.getStudentId(stuPerName,  stuFamName);
+            int stuId = StudentsDAO.getStudentId(stuPerName, stuFamName);
             PrintToScreen.getTracName();
             String trac = UserInput.getString();
             int tracId = TractatesDAO.getTractateId(trac);
@@ -100,13 +100,14 @@ public class Application {
     private static void recordLearning(boolean getDate, int stuId, int tracId, int page) throws SQLException {
         Date date = null;
         if (getDate) {
-            while(date == null) {
+            while (date == null) {
                 date = UserInput.getDate();
-            }
-            if(date != null) StudentsTractatesDAO.enterNewRow(stuId, tracId, page, date);
-            else {
-                PrintToScreen.dateInvalid();
-                PrintToScreen.tryAgain();
+
+                if (date != null) StudentsTractatesDAO.enterNewRow(stuId, tracId, page, date);
+                else if (date == null) {
+                    PrintToScreen.dateInvalid();
+                    PrintToScreen.tryAgain();
+                }
             }
         } else {
             StudentsTractatesDAO.enterNewRow(stuId, tracId, page);
@@ -124,12 +125,12 @@ public class Application {
 
     private static int dafToPage(int daf, char amud) {
         // minimum daf in all tractates is 2, and 'n' has been chosen to denote an invalid amud
-        if(daf > 1 && amud != 'n'){
+        if (daf > 1 && amud != 'n') {
             // formula to convert daf and amud into page number, with 2a denoting "1," 2b denoting "2", etc
-            if(amud == 'a') return 2 * daf - 3;
+            if (amud == 'a') return 2 * daf - 3;
             return 2 * daf - 2;
         }
-        return - 1;
+        return -1;
     }
 
     private static void deleteStudentFromDB() throws SQLException {
@@ -139,8 +140,7 @@ public class Application {
         if (studentFound) {
             int stuId = StudentsDAO.getStudentId(studentPersonalName, studentFamilyName);
             StudentsDAO.deleteStudent(stuId);
-        }
-        else {
+        } else {
             PrintToScreen.studentNotFound();
         }
     }
@@ -176,10 +176,10 @@ public class Application {
         PrintToScreen.getTracName();
         String tracName = UserInput.getString();
         boolean tracExists = TractatesDAO.doesTracExist(tracName);
-        if(tracExists == false) {
+        if (tracExists == false) {
             PrintToScreen.getTracPages();
             int tracPages = UserInput.getNumPages();
-            if(tracPages > 0) TractatesDAO.addTracToDB(tracName, tracPages);
+            if (tracPages > 0) TractatesDAO.addTracToDB(tracName, tracPages);
             else PrintToScreen.invalidNumPages();
         } else PrintToScreen.tracAlreadyExists();
     }

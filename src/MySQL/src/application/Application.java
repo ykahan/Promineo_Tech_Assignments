@@ -100,8 +100,9 @@ public class Application {
     private static void recordLearning(boolean getDate, int stuId, int tracId, int page) throws SQLException {
         Date date = null;
         if (getDate) {
-            while(date == null)
-            date = UserInput.getDate();
+            while(date == null) {
+                date = UserInput.getDate();
+            }
             if(date != null) StudentsTractatesDAO.enterNewRow(stuId, tracId, page, date);
             else {
                 PrintToScreen.dateInvalid();

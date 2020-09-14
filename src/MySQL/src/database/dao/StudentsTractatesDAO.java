@@ -14,14 +14,10 @@ public class StudentsTractatesDAO {
     private static final String CREATE_NEW_ROW_WITHOUT_DATE =
             "INSERT INTO students_tractates(student_id, tractate_id, page) " +
                     "VALUES(?, ?, ?)";
-    private static Connection conn;
+    private static Connection conn = DB_Connection.getConnection();
 
     private static final String CREATE_NEW_ROW =
             "";
-    
-    public StudentsTractatesDAO(){
-        conn = DB_Connection.getConnection();
-    }
     
     public static void enterNewRow(int stuId, int tracId, int page, Date date) throws SQLException {
         PreparedStatement pstmt = conn.prepareStatement(CREATE_NEW_ROW_WITH_DATE);

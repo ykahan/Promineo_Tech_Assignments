@@ -62,7 +62,7 @@ public class MessagesRepository {
     }
 
     public static String getTracName() {
-        return "Enter tractate name.";
+        return "Enter tractate name, please.";
     }
 
     public static String displayTrac(String tracName, int numPages) {

@@ -59,7 +59,8 @@ public class TractatesDAO {
         PreparedStatement pstmt = conn.prepareStatement(GET_TRACTATE_ID_QUERY);
         pstmt.setString(1, trac);
         ResultSet rset = pstmt.executeQuery();
-        return rset.getInt(1);
+        while(rset.next())return rset.getInt(1);
+        return -1;
     }
 
     public static boolean isPageValid(int tracId, int page) throws SQLException {
@@ -68,7 +69,8 @@ public class TractatesDAO {
         pstmt.setInt(1, tracId);
         pstmt.setInt(2, page);
         ResultSet rset = pstmt.executeQuery();
-        return rset.getInt(1) > 0;
+        while(rset.next()) return rset.getInt(1) > 0;
+        return false;
     }
 }
 

@@ -1,6 +1,7 @@
 package io;
 
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
 
@@ -18,12 +19,18 @@ public class UserInput {
             if(pages <= 0) pages = -1;
         }
         return pages;
-    }    public static Date getDate() {
+    }
+
+    public static Date getDate() {
         int year = getYear();
         int month = getMonth();
         int day = getDay();
         boolean dateIsValid = isDateValid(year, month, day);
-        if(dateIsValid) return (Date) new GregorianCalendar(year, month - 1, day).getTime();
+        if(dateIsValid) {
+            String date = year + "-" + month + "-" + day;
+            java.sql.Date sqlDate = java.sql.Date.valueOf(date);
+            return sqlDate;
+        }
         else return null;
     }
 

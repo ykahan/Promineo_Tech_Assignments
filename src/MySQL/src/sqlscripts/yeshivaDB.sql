@@ -6,8 +6,7 @@ DROP TABLE IF EXISTS tractates;
 CREATE TABLE IF NOT EXISTS tractates(
     id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(30) NOT NULL,
-    maxPages INT(10) NOT NULL,
-    maxDaf VARCHAR(20) NOT NULL
+    pages INT(10) NOT NULL
 );
 
 INSERT INTO tractates(name, pages) VALUES("Brachos", 125);
@@ -30,7 +29,7 @@ CREATE TABLE IF NOT EXISTS students_tractates(
     FOREIGN KEY (student_id) REFERENCES students(id),
     tractate_id INT(10) NOT NULL,
     FOREIGN KEY (tractate_id) REFERENCES tractates(id),
-    daf VARCHAR(20) NOT NULL,
-    date_studied TIMESTAMP NOT NULL DEFAULT current_timestamp
+    page INT(10) NOT NULL,
+    date_studied DATETIME NOT NULL DEFAULT current_timestamp
 );
 

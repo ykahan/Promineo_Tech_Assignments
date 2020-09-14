@@ -102,4 +102,8 @@ public class PrintToScreen {
     public static void getDateUnit(String type) {
         System.out.println(MessagesRepository.getDateUnit(type));
     }
+
+    public static void enterToContinue() {
+        System.out.println(MessagesRepository.enterToContinue());
+    }
 }

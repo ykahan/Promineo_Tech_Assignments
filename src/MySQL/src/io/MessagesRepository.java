@@ -104,4 +104,8 @@ public class MessagesRepository {
     public static String getDateUnit(String type) {
         return "Provide " + type;
     }
+
+    public static String enterToContinue() {
+        return "Press enter to continue";
+    }
 }

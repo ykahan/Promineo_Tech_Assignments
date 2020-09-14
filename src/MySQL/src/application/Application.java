@@ -50,10 +50,15 @@ public class Application {
                     case (9): // break out of app
                         continueApp = false;
                         PrintToScreen.goodbye();
+                        continueApp = false;
                         break;
                     default:
                         PrintToScreen.invalidInput();
                         break;
+                }
+                if(continueApp) {
+                    PrintToScreen.enterToContinue();
+                    UserInput.getString();
                 }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();

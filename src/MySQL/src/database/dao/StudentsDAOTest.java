@@ -27,6 +27,7 @@ class StudentsDAOTest {
     @org.junit.jupiter.api.Test
     void getStudentId() throws SQLException {
         int id = StudentsDAO.getStudentId("Yehoshua", "Kahan");
+
         assertEquals(1, id);
     }
 
@@ -35,15 +36,18 @@ class StudentsDAOTest {
         StudentsDAO.displayAllStudentNames();
         String out = outContent.toString();
         String expected = "ID #2:\tName: Almoni, Ploni";
+
         boolean expectedFound = out.contains(expected);
         expected = "ID #1:\tName: Kahan, Yehoshua";
         if(expectedFound) expectedFound = out.contains(expected);
+
         assertTrue(expectedFound);
     }
 
     @org.junit.jupiter.api.Test
     void doesStudentExist() throws SQLException {
         boolean exists = StudentsDAO.doesStudentExist("Yehoshua", "Kahan");
+
         assertTrue(exists);
     }
 

@@ -21,6 +21,14 @@ public class TractatesDAO {
             "SELECT * FROM tractates WHERE name = ?";
     private static final String GET_TRACTATE_ID_QUERY =
             "SELECT id FROM tractates WHERE name = ?";
+    private static final String DELETE_TRACTATE =
+            "DELETE FROM tractates WHERE name = ?";
+
+    public static void deleteTractate(String name) throws SQLException {
+        PreparedStatement pstmt = conn.prepareStatement(DELETE_TRACTATE);
+        pstmt.setString(1, name);
+        pstmt.execute();
+    }
 
     public static void displayAllTracs() throws SQLException {
         PreparedStatement pstmt = conn.prepareStatement(DISPLAY_ALL_TRACS_QUERY);

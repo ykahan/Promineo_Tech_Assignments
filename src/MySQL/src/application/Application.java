@@ -10,10 +10,8 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 public class Application {
-//    private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         boolean continueApp = true;
